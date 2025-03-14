@@ -27,6 +27,7 @@ import reportIcon from "../../assets/yt-report.svg"
 import helpIcon from "../../assets/yt-help.svg"
 import sendIcon from "../../assets/yt-send.svg"
 import { useNavigate } from "react-router-dom";
+import { useMenu } from "../../context/MenuContext";
 
 
 
@@ -54,15 +55,13 @@ const items = [
   {icon: reportIcon, link: "#", name: "Report history", isSvg: true},
   {icon: helpIcon, link: "#", name: "Help", isSvg: true},
   {icon: sendIcon, link: "#", name: "Send feedback", isSvg: true},
-
 ]
 
-interface IProps {
-  openMenu: boolean;
-}
 
-const Menu = ({ openMenu } : IProps) => {
-  const navigate = useNavigate()
+
+const Menu = () => {
+  const { openMenu } = useMenu();
+  const navigate = useNavigate();
 
   return (
     <Container openMenu={openMenu} >

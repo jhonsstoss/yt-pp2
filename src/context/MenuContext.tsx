@@ -10,7 +10,12 @@ const MenuContext = createContext<MenuContextProps | undefined>(undefined);
 export const MenuProvider = ({ children }: { children: ReactNode }) => {
   const [openMenu, setOpenMenu] = useState(true);
 
-  const toggleMenu = () => setOpenMenu((prev) => !prev);
+  const toggleMenu = () => {
+    setOpenMenu((prev) => {
+      console.log("🔄 Alterando openMenu para:", !prev); // 🔥 Teste se está alternando corretamente
+      return !prev;
+    });
+  };
 
   return (
     <MenuContext.Provider value={{ openMenu, toggleMenu }}>

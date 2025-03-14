@@ -15,17 +15,15 @@ import SearchIcon from "../../assets/search.png"
 import MicIcon from "../../assets/microfone-gravador.png"
 import VideoIcon from "../../assets/video.png"
 import NotificationIcon from "../../assets/sino.png"
+import { useMenu } from "../../context/MenuContext"; 
 
-interface IProps {
-  openMenu: boolean,
-  setOpenMenu: (openMenu: boolean) => void
-}
+const Header = () => {
+  const { toggleMenu } = useMenu();
 
-const Header = ({ openMenu, setOpenMenu }: IProps) => {
   return (
     <Container>
     <LogoContainer>
-      <ButtonContainer onClick={() => setOpenMenu(!openMenu)} margin='0 10px 0 0'>
+      <ButtonContainer onClick={toggleMenu} margin='0 10px 0 0'>
         <ButtonIcon alt="" src={HamburguerIcon}/>
       </ButtonContainer>
       <img 

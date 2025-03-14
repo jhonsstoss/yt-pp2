@@ -8,16 +8,15 @@ import Library from "./pages/library"
 import { MenuProvider } from "./context/MenuContext"
 
 function App() {
-  const [openMenu, setOpenMenu] = useState(true)
-
+  
   return (
     <MenuProvider>
       <BrowserRouter>
         <div className="App">    
-          <Header openMenu={openMenu} setOpenMenu={setOpenMenu} />
+          <Header />
           <div style={{ width: '100%', display: 'flex' }}>
-            <Menu openMenu={openMenu} />
-            <div style={{ width: '100%', padding: '50px 70px', boxSizing: 'border-box', display: 'flex', justifyContent: 'center' }}>
+            <Menu  />
+            <div style={{ width: '100vw', padding: '0px 5px 70px 0px', boxSizing: 'border-box', display: 'flex', justifyContent: 'center' }}>
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/history" element={<History/>} />
