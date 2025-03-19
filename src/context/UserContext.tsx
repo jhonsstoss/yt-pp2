@@ -100,7 +100,7 @@ export const UserStorage = ({ children }: any) => {
 
   const handleSignUp = async (name: string, email: string, password: string) => {
     try {
-      const { data } = await api.post('/user/sign-up', { name, email, password });
+      const { data } = await api.post('/user/signup', { name, email, password });
       
       const color = generateUserColor(email);
       setUserColor(color);
