@@ -1,26 +1,3 @@
-// import { useContext, useState } from "react";
-// import { UserContext } from "../../context/UserContext";
-
-
-
-// const Login = () => {
-//   const { handleLogin } = useContext(UserContext)
-
-//   const [email, setEmail] = useState('');
-//   const [password, setPassword] = useState('');
-
-//   return (
-//     <>
-//       <div>login</div>
-//       <input type='email' value={email} onChange={(e) => setEmail(e.target.value)} />
-//       <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-//       <button onClick={() => handleLogin(email, password)}>Login</button>
-//     </>
-//   );
-// };
-
-// export default Login;
-
 import { useContext, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";

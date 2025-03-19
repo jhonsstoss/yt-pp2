@@ -33,7 +33,8 @@ const Home = () => {
   const [channelThumbnails, setChannelThumbnails] = useState<{ [key: string]: string }>({});
   const [videos, setVideos] = useState<Videos[]>([]);
   const {categoryId} = useCategoryContext()
-  const API_KEY = 'AIzaSyB9t6w7tiW1Rsh0cF31qsOhd4THtNHdzTI'
+  const YOUTUBE_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
+
 
   // const url = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2Cstatistics&chart=mostPopular&hl=pt_BR&maxResults=48&regionCode=BR&videoCategoryId=${categoryId || 0}&key=${API_KEY}`;
 
@@ -50,7 +51,7 @@ const Home = () => {
         console.log("CategoryId atual:", categoryId); // Verifique se está atualizando
 
         const validCategory = categoryId && categoryId !== '0' ? categoryId : '';
-        const url = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2Cstatistics&chart=mostPopular&hl=pt_BR&maxResults=48&regionCode=BR${validCategory ? `&videoCategoryId=${validCategory}` : ''}&key=${API_KEY}`;
+        const url = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2Cstatistics&chart=mostPopular&hl=pt_BR&maxResults=48&regionCode=BR${validCategory ? `&videoCategoryId=${validCategory}` : ''}&key=${YOUTUBE_KEY}`;
 
         console.log("URL:", url); // Verifique a URL gerada
 
@@ -62,7 +63,7 @@ const Home = () => {
         const uniqueChannelIds = [...new Set(channelIds)]; // Remove IDs duplicados
 
         const channelsResponse = await axios.get(
-          `https://youtube.googleapis.com/youtube/v3/channels?part=snippet&id=${uniqueChannelIds.join(',')}&key=${API_KEY}`
+          `https://youtube.googleapis.com/youtube/v3/channels?part=snippet&id=${uniqueChannelIds.join(',')}&key=${YOUTUBE_KEY}`
         );
 
         const thumbnailsMap = channelsResponse.data.items.reduce((acc: any, channel: any) => {
