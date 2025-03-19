@@ -75,7 +75,7 @@ const Home = () => {
 
       } catch (error) {
         console.error("Erro na API:", error);
-  
+        setError('Erro ao carregar vídeos. Tente novamente mais tarde.');
       } finally {
         setLoading(false);
       }
