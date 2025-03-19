@@ -8,24 +8,41 @@ export const UserStorage = ({ children }: any) => {
   const [user, setUser] = useState({});
   const [token, setToken] = useState<string | null>(localStorage.getItem('token')); //Inicialize como null
   const [userColor, setUserColor] = useState<string>('#ccc'); // Estado para a cor
+  const [loading, setLoading] = useState(false);
 
 
-  const getUser = (token: string) => {
-    console.log("Token sendo enviado:", token);
-    api.get('/user/get-user', {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }).then(({ data }) => {
-      console.log("Resposta do getUser:", data); 
+  // const getUser = (token: string) => {
+  //   console.log("Token sendo enviado:", token);
+  //   api.get('/user/get-user', {
+  //     headers: {
+  //       Authorization: `Bearer ${token}`
+  //     }
+  //   }).then(({ data }) => {
+  //     console.log("Resposta do getUser:", data); 
+  //     setUser(data.user);
+  //     setLogin(true);
+  //   }).catch((error) => {
+  //     console.log('Erro ao buscar usuário:', error.response?.data || error.message);
+
+  //     // logout(); // Chama logout se o token for inválido
+
+  //   })
+  // }
+
+  const getUser = async (token: string) => {
+    setLoading(true);
+    try {
+      const { data } = await api.get('/user/get-user', {
+        headers: { Authorization: `Bearer ${token}` }
+      });
       setUser(data.user);
       setLogin(true);
-    }).catch((error) => {
-      console.log('Erro ao buscar usuário:', error.response?.data || error.message);
-
-      // logout(); // Chama logout se o token for inválido
-
-    })
+    } catch (error) {
+      console.log('Erro ao buscar usuário:', error);
+      logOut();
+    } finally {
+      setLoading(false);
+    }
   }
 
   const logOut = () => {
@@ -45,42 +62,83 @@ export const UserStorage = ({ children }: any) => {
     if (savedColor) setUserColor(savedColor);
   }, []);
 
-  const handleLogin = (email: string, password: string) => {
-    api.post('/user/sign-in', {email, password}).then(({ data }) => {
-      const color = generateUserColor(email); 
+  // const handleLogin = (email: string, password: string) => {
+  //   api.post('/user/sign-in', {email, password}).then(({ data }) => {
+  //     const color = generateUserColor(email); 
+  //     setUserColor(color);
+  //     localStorage.setItem('userColor', color); 
+  //     setLogin(true);
+  //     localStorage.setItem('token', data.token);
+  //     setToken(data.token);
+  //     getUser(data.token);
+  //   }).catch((error) => {
+  //     console.log('Não foi possível fazer o login', error)
+  //   })
+  // }
+
+  const handleLogin = async (email: string, password: string) => { // Adicione async
+    try {
+      console.log("Iniciando login...");
+      const { data } = await api.post('/user/sign-in', {email, password}); // Adicione await
+      console.log("Resposta do login:", data);
+
+      const color = generateUserColor(email);
       setUserColor(color);
-      localStorage.setItem('userColor', color); 
-      setLogin(true);
+      localStorage.setItem('userColor', color);
       localStorage.setItem('token', data.token);
       setToken(data.token);
-      getUser(data.token);
-    }).catch((error) => {
-      console.log('Não foi possível fazer o login', error)
-    })
+
+      console.log("Chamando getUser...");
+      await getUser(data.token); // Adicione await
+      setLogin(true);
+      console.log("Login concluído com sucesso!");
+    } catch (error) {
+      console.log('Não foi possível fazer o login', error);
+      throw error; // Propague o erro
+    }
   }
 
   const handleSignUp = async (name: string, email: string, password: string) => {
     try {
-      const { data } = await api.post('/user/sign-up', {
-        name,
-        email,
-        password
-      });
+      const { data } = await api.post('/user/sign-up', { name, email, password });
       
-      // Opcional: Login automático após cadastro
       const color = generateUserColor(email);
       setUserColor(color);
       localStorage.setItem('userColor', color);
-      setLogin(true);
       localStorage.setItem('token', data.token);
       setToken(data.token);
-      getUser(data.token);
+      await getUser(data.token); // Adicione await
+      setLogin(true);
       
       return data;
     } catch (error) {
       throw new Error('Erro ao criar conta');
     }
   };
+  
+
+  // const handleSignUp = async (name: string, email: string, password: string) => {
+  //   try {
+  //     const { data } = await api.post('/user/sign-up', {
+  //       name,
+  //       email,
+  //       password
+  //     });
+      
+  //     // Opcional: Login automático após cadastro
+  //     const color = generateUserColor(email);
+  //     setUserColor(color);
+  //     localStorage.setItem('userColor', color);
+  //     setLogin(true);
+  //     localStorage.setItem('token', data.token);
+  //     setToken(data.token);
+  //     getUser(data.token);
+      
+  //     return data;
+  //   } catch (error) {
+  //     throw new Error('Erro ao criar conta');
+  //   }
+  // };
   
 
   const generateUserColor = (email: string): string => {

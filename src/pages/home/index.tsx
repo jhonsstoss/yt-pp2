@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import TopBar from "../../components/topBar";
 import VideoComponent from "../../components/videoComponent";
 import { useMenu } from "../../context/MenuContext";
 import { Container, BigHome } from "./styles";
 import axios from "axios";
 import moment from 'moment';
 import { useCategoryContext } from "../../context/searchCategories";
+import TopBar from "../../components/topBar";
 
 const Home = () => {
 

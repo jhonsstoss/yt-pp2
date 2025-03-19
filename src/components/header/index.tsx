@@ -87,7 +87,7 @@ const Header = () => {
             $backgroundColor={userColor}
             onClick={() => setShowDropdown(!showDropdown)}
           >
-            {user?.name?.[0]?.toUpperCase() || 'U'}
+            {user?.name ? user.name[0].toUpperCase() : 'U'}
           </UserIcon>
 
           {showDropdown && (

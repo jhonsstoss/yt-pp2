@@ -20,7 +20,7 @@ const SignUp = () => {
 
     try {
       await handleSignUp(name, email, password);
-      navigate("/login");
+      navigate("/");
     } catch (error) {
       setError("Erro ao criar conta. Tente novamente.");
     }
