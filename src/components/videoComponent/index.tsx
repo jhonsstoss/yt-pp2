@@ -1,16 +1,36 @@
+import { useState } from "react";
 import { ChannelImage, Container, ImageBanner, TextCard, TextContainer, Title, TitleContainer } from "./styles";
 
-function VideoComponent() {
-  
+interface Props {
+  title: string
+  thumbnail: string
+  channelImage: string
+  channelName: string
+  details: string
+}
+
+function VideoComponent(props: Props) {
+  const [imgError, setImgError] = useState(false);
+  const [channelImgError, setChannelImgError] = useState(false);
+
+
     return (
       <Container>
-        <ImageBanner src="https://i.ytimg.com/vi/FtMwVBKPvQk/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLAU0_x4vnyoxBD7h8QneJXB7FdAkg" />
+        <ImageBanner 
+          alt='thumbnail' 
+          src={imgError ? 'fallback-image.jpg' : props.thumbnail}
+          onError={() => setImgError(true)}
+        />
         <TitleContainer>
-          <ChannelImage src="https://yt3.ggpht.com/ytc/AIdro_m3o1hVdTIlnMGLrABDdlyQK28Ps9sZJpOVAoq8TlyBfx8=s68-c-k-c0x00ffffff-no-rj" />
+          <ChannelImage 
+            alt='channel'
+            src={channelImgError ? '/fallback-channel.jpg' : props.channelImage}
+            onError={() => setChannelImgError(true)}
+          />
           <TextContainer>
-            <Title>Konebu @ Cosmic Pacha</Title>
-            <TextCard>Sangoma Records</TextCard>
-            <TextCard>59 mil visualizações • há 2 anos</TextCard>
+            <Title>{props.title}</Title>
+            <TextCard>{props.channelName}</TextCard>
+            <TextCard>{props.details}</TextCard>
           </TextContainer>
         </TitleContainer>
       </Container>

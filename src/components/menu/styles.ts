@@ -1,16 +1,33 @@
 import styled from "styled-components";
 
+// export const Container = styled.div<{openMenu: boolean}> `
+//   width: ${({openMenu}) => openMenu? '250px' : '70px'};
+//   height: calc(100vh - 55px); // se der merda, 100vh - 55px
+//   box-sizing: border-box;
+//   padding: 0px 10px 10px 10px;
+//   display: flex;
+//   align-items: center;
+//   flex-direction: column;
+//   overflow-y: auto;
+//   position: sticky;
+//   top: 55px;
+// `;
+
 export const Container = styled.div<{openMenu: boolean}> `
-  width: ${({openMenu}) => openMenu? '250px' : '70px'};
-  height: calc(100vh - 55px); // se der merda, 100vh - 55px
+  width: ${({openMenu}) => openMenu? '240px' : '70px'};
+  height: calc(100vh - 55px);
   box-sizing: border-box;
   padding: 0px 10px 10px 10px;
   display: flex;
   align-items: center;
   flex-direction: column;
   overflow-y: auto;
-  position: sticky;
-  top: 55px;
+  position: fixed;
+  top: 55px; // Abaixo do Header
+  left: 0;
+  z-index: 500; // Menor que o Header
+  background-color: white;
+  transition: width 0.3s ease;
 `;
 
 export const MenuItem = styled.div<{ openMenu: boolean; isDivider?: boolean }>`
