@@ -1,23 +1,3 @@
-// import { Container, Categorys, BigContainer } from "./styles";
-
-// const items = ["All", "Games", "Cars", "Cars", "Cars", "Cars", "Cars", "Cars", "Cars", "Cars", "Cars", "Cars", "Cars", "Cars", "Cars", "Cars", "Cars", "Cars", "Cars", "Cars", "Cars", "Cars", "Cars", "Cars", "Cars", "Cars", "Cars", "Cars", "Cars", "Cars", "Cars", "Cars", "Cars", "Cars", "Cars"]
-
-// function TopBar() {
-  
-//     return (
-//       <BigContainer>
-//         <Container>
-//           {items.map((item, index) => (
-//             <Categorys key={index}>
-//               <span>{item}</span>
-//             </Categorys>))}
-//         </Container>
-//       </BigContainer>
-//     )
-//   }
-  
-// export default TopBar;
-
 import { useEffect, useRef, useState } from "react";
 import { Container, Categorys, BigContainer, ScrollButton } from "./styles";
 import { useCategoryContext } from "../../context/searchCategories";
@@ -38,13 +18,13 @@ const TopBar = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [showScroll, setShowScroll] = useState({ left: false, right: true });
   const scrollRef = useRef<HTMLDivElement>(null);
-  const API_KEY = 'AIzaSyB9t6w7tiW1Rsh0cF31qsOhd4THtNHdzTI';
+  const YOUTUBE_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         const response = await axios.get(
-          `https://youtube.googleapis.com/youtube/v3/videoCategories?part=snippet&regionCode=BR&key=${API_KEY}`
+          `https://youtube.googleapis.com/youtube/v3/videoCategories?part=snippet&regionCode=BR&key=${YOUTUBE_KEY}`
         );
         setCategories([
           { id: "0", snippet: { title: "Tudo" } }, // Categoria padrão

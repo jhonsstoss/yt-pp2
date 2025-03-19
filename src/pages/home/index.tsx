@@ -35,15 +35,6 @@ const Home = () => {
   const {categoryId} = useCategoryContext()
   const YOUTUBE_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
 
-
-  // const url = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2Cstatistics&chart=mostPopular&hl=pt_BR&maxResults=48&regionCode=BR&videoCategoryId=${categoryId || 0}&key=${API_KEY}`;
-
-  // const url = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2Cstatistics&chart=mostPopular&hl=pt_BR&maxResults=48&regionCode=BR${
-  //   categoryId && categoryId !== '0' ? `&videoCategoryId=${categoryId}` : ''
-  // }&key=${API_KEY}`;
-
- 
-
   useEffect(() => {
     const load = async () => {
       try {
